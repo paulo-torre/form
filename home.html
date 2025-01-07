@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaga de Estágio</title>
+    <style>
+        * {
+            cursor: default;
+        }
+
+        body {
+            background-image: linear-gradient(200deg, #eac2ff, #cbcffd, #d0b8f1, #eac2ff);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            background-color: white;
+            text-align: center;
+            padding: 0;
+            top:0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.452);
+            z-index: 1000;
+        }
+
+        header img {
+            height: 70px;
+            width: 100px;
+
+            object-fit: cover;
+            object-position: center;
+        }
+
+        ul li {
+            padding: 5px 0;
+        }
+
+        ul li div {
+            padding: 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 4%;
+        }
+
+        ul li::marker {
+            color: #3700b3;
+        }
+
+        ul li .icon {
+            height: 25px;
+            width: 70px;
+
+            object-fit: cover;
+            object-position: center;
+
+            border-radius: 6px;
+
+            filter: brightness(0.95);
+            transition: all ease-out 0.2s;
+            cursor: pointer;
+        }
+        ul li .icon:hover {
+            transform: scale(1.04);
+            filter: brightness(1);
+        }
+
+        .container {
+            display: none;
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px 30px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .subcontainers {
+            padding: 20px 0;
+            border-top: 1px solid #6200ea52;
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #6200ea;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            text-align: center;
+            transition: all ease-out 0.3s;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: scale(1.04);
+            background-color: #3700b3;
+        }
+
+        #loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .loader {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: inline-block;
+            border-top: 3px solid #FFF;
+            border-right: 3px solid transparent;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+            }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="assets/logo.png" alt="Logo da Empresa">
+    </header>
+
+    <div id="loading">
+        <span class="loader"></span>
+    </div>
+
+    <div class="container">
+        <h1>Desenvolvimento Web</h1><br>
+        
+        <div class="subcontainers">
+            <div>
+                <p><strong>Código da Vaga:</strong> 34578</p>
+                <p><strong>Local:</strong> Remoto</p>
+                <p><strong>Data de Início:</strong> Imediata</p>
+                <p><strong>Período:</strong> 1 ano</p>
+                <p><strong>Bolsa:</strong> R$ 900,00 / mês</p>
+                <p><strong>Benefícios:</strong></p>
+                <ul>
+                    <li>
+                        <div>
+                            Vale-refeição
+                            <a href="https://www.sodexobeneficios.com.br/">
+                                <img class="icon" src="assets/pluxee.png"/>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            Seguro de vida
+                            <a href="https://www.portoseguro.com.br/">
+                                <img class="icon" src="assets/porto_seguro.png"/>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <p><strong>Atividades:</strong></p>
+                <ul>
+                    <li>Desenvolver e manter aplicações web</li>
+                    <li>Manutenção e consumo de APIs REST e GraphQL</li>
+                    <li>Implementar designs responsivos</li>
+                    <li>Realizar integração entre front-end e back-end</li>
+                    <li>Participar da análise e design</li>
+                    <li>Auxiliar na identificação e resolução de problemas</li>
+                </ul>
+
+                <p><strong>Requesitos:</strong></p>
+                <ul>
+                    <li>Conhecimento em HTML, CSS e JavaScript</li>
+                    <li>Familiaridade com frameworks front-end como React, Angular ou Vue.js</li>
+                    <li>Conhecimento em desenvolvimento back-end utilizando Node.js, Python ou PHP</li>
+                    <li>Experiência com consumo e integração de APIs REST ou GraphQL</li>
+                    <li>Noções de bancos de dados relacionais e não relacionais</li>
+                    <li>Familiaridade com controle de versões utilizando Git</li>
+                    <li>Boas práticas de desenvolvimento, como acessibilidade e responsividade</li>
+                </ul>
+            </div>
+        </div>
+
+        
+        <a href="qst.html" class="btn">Quero me candidatar</a>
+    </div>
+
+    <script>
+        window.onload = function () {
+          setTimeout(() => {
+            document.getElementById('loading').style.display = 'none';
+            document.querySelector('.container').style.display = 'block';
+            document.querySelector('body').style.paddingTop = '70px';
+          }, Math.floor(Math.random() * 1000) + 300 );
+        };
+    </script>
+</body>
+</html>

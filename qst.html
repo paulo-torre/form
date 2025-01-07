@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NIN - Inscrição 34578</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@latest/dist/css/bootstrap.min.css">
+    
+    <style>
+        .sumario {
+            display: none;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .sumario div {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            background-color: white;
+            color: #c6b2e4;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all ease-out 0.2s;
+        } .sumario div:hover {
+            background-color: rgba(255, 255, 255, 0.76);
+        }
+        .sumario .active {
+            background-color:  #6200ea;
+            color: white;
+        } .sumario .active:hover {
+            background-color:  #6200eabe;
+            
+        }
+        .form-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        button:disabled {
+            background-color: lightgray;
+            cursor: not-allowed;
+        }
+        #section {
+            display: none;
+        }
+        #section.active {
+            display: block;
+        }
+        .final {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            z-index: 10;
+        }
+
+        body {
+            background-image: linear-gradient(200deg, #eac2ff, #cbcffd, #d0b8f1, #eac2ff);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        header {
+            position: fixed;
+            width: 100%;
+            background-color: white;
+            text-align: center;
+            padding: 0;
+            top:0;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.452);
+        }
+
+        header img {
+            height: 70px;
+            width: 100px;
+
+            object-fit: cover;
+            object-position: center;
+        }
+
+        input:hover, select:hover {
+            transition: all ease-out 0.2s;
+            filter: brightness(0.96);
+            opacity: 0.9;
+        }
+
+        .btn:hover {
+            transition: all ease-in-out 0.2s;
+            transform: scale(1.04);
+        }
+
+        #loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .loader {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: inline-block;
+            border-top: 3px solid #FFF;
+            border-right: 3px solid transparent;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+            }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <script>
+        let currentSection = 0;
+
+        function showSection(index) {
+            const sections = document.querySelectorAll('#section');
+            const sumario = document.querySelectorAll('.sumario div');
+
+            // Atualiza seções
+            sections.forEach((section, i) => {
+                section.classList.toggle('active', i === index);
+            });
+
+            // Atualiza sumário
+            sumario.forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+
+            currentSection = index;
+        }
+
+        function prevSection() {
+            if (currentSection > 0) {
+                showSection(currentSection - 1);
+            }
+        }
+
+        function finishForm() {
+            const forms = document.querySelectorAll('form');
+
+            for (const form of forms) {
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+            }
+            document.querySelector('.final').style.display = 'flex';
+        }
+
+        function limitInputLength(input) {
+            if (input.value.length > 1) {
+                input.value = input.value.slice(-1); // Mantém apenas o primeiro caractere
+            }
+        }
+
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('loading').style.display = 'none';
+                document.querySelector('.sumario').style.display = 'flex';
+                document.querySelector('body').style.paddingTop = '80px';
+                showSection(0);
+            }, Math.floor(Math.random() * 1200)) + 800;
+
+            
+            document.querySelectorAll('input[name="duracao"]').forEach(radio => {
+                radio.addEventListener('change', function () {
+                // Desabilitar todos os campos de texto
+                document.querySelectorAll('.anos-text, .semestres_text').forEach(input => {
+                    input.disabled = true;
+                    input.value = '';
+                });
+
+                // Habilitar o campo de texto associado ao rádio selecionado
+                const textInput = document.querySelector(`#${this.dataset.target}`);
+                if (textInput) {
+                    textInput.disabled = false;
+                }
+                });
+            });    
+
+        };
+
+        
+    </script>
+</head>
+<body>
+    <header>
+        <img src="assets/logo.png" alt="Logo">
+    </header>
+    
+    <div id="loading">
+        <span class="loader"></span>
+    </div>
+    
+    <div class="sumario">
+        <div onclick="showSection(0)">1</div>
+        <div onclick="showSection(1)">2</div>
+        <div onclick="showSection(2)">3</div>
+        <div onclick="showSection(3)">4</div>
+        <div onclick="showSection(4)">5</div>
+    </div>
+        <!-- Seção 1: Informações Pessoais -->
+    
+    <script>
+        function togglePcD(i) {
+            const toggle = document.querySelector("#togglePcD");
+            const input = document.querySelector("#pcd_especificacao");
+            
+            if (i == 0) {
+                toggle.style.display = "block";
+                input.setAttribute("required", "");
+            } else {
+                toggle.style.display = "none";
+                input.removeAttribute("required");
+            }
+        }
+    </script>
+
+    <div  id="section" class="container my-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div class="bg-white p-4 rounded shadow" style="background-image: linear-gradient(28deg, #e8d8ff, white);">
+                    <h2 class="text-center mb-4">Informações Pessoais</h2>
+                    <form>
+                        <div class="form-group mb-3">
+                            <label for="nome">Nome:<span style="color: red;">*</span></label>
+                            <input style="border: 1px solid #b49dd4;" style="border: 1px solid #b49dd4;" type="text" id="nome" name="nome" class="form-control" placeholder="Digite seu nome" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="cpf">CPF:<span style="color: red;">*</span></label>
+                            <input style="border: 1px solid #b49dd4;" type="text" id="cpf" name="cpf" class="form-control" placeholder="Digite seu CPF" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="data_nascimento">Data de nascimento:<span style="color: red;">*</span></label>
+                            <input style="border: 1px solid #b49dd4;" type="date" id="data_nascimento" name="data_nascimento" class="form-control" required>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="sexo">Sexo:<span style="color: red;">*</span></label>
+                            <select style="border: 1px solid #b49dd4;" id="sexo" name="sexo" class="form-control" required>
+                                <option value="">Selecione...</option>
+                                <option value="masculino">Masculino</option>
+                                <option value="feminino">Feminino</option>
+                                <option value="outro">Outro</option>
+                                <option value="pnr">Prefiro não responder</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="genero">Gênero:</label>
+                            <input style="border: 1px solid #b49dd4;" type="text" id="genero" name="genero" class="form-control" placeholder="Digite seu gênero">
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label for="etnia">Etnia:<span style="color: red;">*</span></label>
+                            <select style="border: 1px solid #b49dd4;" id="etnia" name="etnia" class="form-control" required>
+                                <option value="">Selecione...</option>
+                                <option value="masculino">Preta</option>
+                                <option value="feminino">Parda</option>
+                                <option value="outro">Branca</option>
+                                <option value="outro">Amarela</option>
+                                <option value="outro">Indígena</option>
+                                <option value="pnr">Prefiro não responder</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="estado_civil">Estado Civil:<span style="color: red;">*</span></label>
+                            <select style="border: 1px solid #b49dd4;" id="estado_civil" name="estado_civil" class="form-control">
+                                <option value="">Selecione...</option>
+                                <option value="solteiro">Solteiro(a)</option>
+                                <option value="casado">Casado(a)</option>
+                                <option value="divorciado">Divorciado(a)</option>
+                                <option value="outro">Outro</option>
+                                <option value="pnr">Prefiro não responder</option>
+                            </select>
+                        </div>
+
+                        <fieldset class="form-group mb-4">
+                            <p>Você é PcD ou necessita de outro tipo de apoio?<span style="color: red;">*</span></p>
+                            <div class="form-check">
+                                <input style="border: 1px solid #b49dd4;" class="form-check-input" onclick="togglePcD(0)" type="radio" id="idioma_sim" name="idioma" value="sim" required>
+                                <label class="form-check-label" for="idioma_sim">Sim</label>
+                            </div>
+                            <div class="form-check">
+                                <input style="border: 1px solid #b49dd4;" class="form-check-input" onclick="togglePcD(1)" type="radio" id="idioma_nao" name="idioma" value="não" required>
+                                <label class="form-check-label" for="idioma_nao">Não</label>
+                            </div>
+                        </fieldset>
+
+                        <div id="togglePcD" style="display: none;" class="form-group mb-3">
+                            <label for="pcd_especificacao">Especifique:<span style="color: red;">*</span></label>
+                            <input style="border: 1px solid #b49dd4;" type="text" id="pcd_especificacao" name="pcd_especificacao" class="form-control" placeholder="Diga sobre sua necessidade">
+                        </div>
+
+                        <button style="background-color:  #6200ea; border:0;" type="button" class="btn btn-primary btn-block" onclick="showSection(currentSection + 1)">
+                            Próximo
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção 2: Informações Socioeconômicas -->
+    <div id="section" class="container my-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div style="background-image: linear-gradient(28deg, #e8d8ff, white);" class="bg-white p-4 rounded shadow">
+                    <h2 class="text-center mb-4">Informações Socioeconômicas</h2>
+                    <form>
+                        <!-- Renda Familiar -->
+                        <div class="form-group mb-3">
+                            <label for="renda">Renda familiar mensal:<span style="color: red;">*</span></label>
+                            <input style="border: 1px solid #b49dd4;" type="number" id="renda" name="renda" class="form-control" placeholder="Digite o valor da renda familiar" required>
+                        </div>
+    
+                        <!-- Número de moradores -->
+                        <div class="form-group mb-3">
+                            <label for="moradores">Quantas pessoas moram com você:<span style="color: red;">*</span></label>
+                            <input style="border: 1px solid #b49dd4;" type="number" id="moradores" name="moradores" class="form-control" placeholder="Digite o número de pessoas" required>
+                        </div>
+    
+                        <!-- Participação em bolsa -->
+                        <fieldset class="form-group mb-4">
+                            <p>Participa de algum programa de bolsa ou financiamento estudantil?<span style="color: red;">*</span></p>
+                            <div class="form-check">
+                                <input style="border: 1px solid #b49dd4;" class="form-check-input" type="radio" id="bolsa_sim" name="bolsa" value="sim" required>
+                                <label class="form-check-label" for="bolsa_sim">Sim</label>
+                            </div>
+                            <div class="form-check">
+                                <input style="border: 1px solid #b49dd4;" class="form-check-input" type="radio" id="bolsa_nao" name="bolsa" value="não" required>
+                                <label class="form-check-label" for="bolsa_nao">Não</label>
+                            </div>
+                        </fieldset>
+    
+                        <!-- Botões de navegação -->
+                        <div class="d-flex justify-content-between">
+                            <button style="background-color: #5a467e; border: 0;"  type="button" class="btn btn-secondary" onclick="prevSection()">Anterior</button>
+                            <button style="background-color:  #6200ea; border:0;" type="button" class="btn btn-primary" onclick="showSection(currentSection + 1)">Próximo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Seção 3: Endereço -->
+    <div id="section" class="container my-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div style="background-image: linear-gradient(28deg, #e8d8ff, white);" class="bg-white p-4 rounded shadow">
+                    <h2 class="text-center mb-4">Endereço</h2>
+                    <form>
+                        <!-- CEP -->
+                        <div class="form-group mb-3">
+                            <label for="cep">CEP:<span style="color: red;">*</span></label>
+                            <input style="border: 1px solid #b49dd4;" type="number" id="cep" name="cep" class="form-control" placeholder="Digite o CEP" required>
+                        </div>
+    
+                        <!-- Endereço -->
+                        <div class="form-group mb-3">
+                            <label for="endereco">Endereço:<span style="color: red;">*</span></label>
+                            <input style="border: 1px solid #b49dd4;" type="text" id="endereco" name="endereco" class="form-control" placeholder="Digite o endereço" required>
+                        </div>
+    
+                        <!-- Estado -->
+                        <div class="form-group mb-3">
+                            <label for="estado">Estado:<span style="color: red;">*</span></label>
+                            <select style="border: 1px solid #b49dd4;" id="estado" name="estado" class="form-control" required>
+                                <option value="">Selecione um estado</option>
+                                <option value="AC">AC</option>
+                                <option value="AL">AL</option>
+                                <option value="AP">AP</option>
+                                <option value="AM">AM</option>
+                                <option value="BA">BA</option>
+                                <option value="CE">CE</option>
+                                <option value="DF">DF</option>
+                                <option value="ES">ES</option>
+                                <option value="GO">GO</option>
+                                <option value="MA">MA</option>
+                                <option value="MT">MT</option>
+                                <option value="MS">MS</option>
+                                <option value="MG">MG</option>
+                                <option value="PA">PA</option>
+                                <option value="PB">PB</option>
+                                <option value="PR">PR</option>
+                                <option value="PE">PE</option>
+                                <option value="PI">PI</option>
+                                <option value="RJ">RJ</option>
+                                <option value="RN">RN</option>
+                                <option value="RS">RS</option>
+                                <option value="RO">RO</option>
+                                <option value="RR">RR</option>
+                                <option value="SC">SC</option>
+                                <option value="SP">SP</option>
+                                <option value="SE">SE</option>
+                                <option value="TO">TO</option>
+                            </select>
+                        </div>
+    
+                        <!-- Cidade -->
+                        <div class="form-group mb-3">
+                            <label for="cidade">Cidade:<span style="color: red;">*</span></label>
+                            <input style="border: 1px solid #b49dd4;" type="text" id="cidade" name="cidade" class="form-control" placeholder="Digite a cidade" required>
+                        </div>
+    
+                        <!-- Complemento -->
+                        <div class="form-group mb-4">
+                            <label for="complemento">Complemento:<span style="color: red;">*</span></label>
+                            <input style="border: 1px solid #b49dd4;" type="text" id="complemento" name="complemento" class="form-control" placeholder="Digite o complemento" required>
+                        </div>
+    
+                        <!-- Botões de navegação -->
+                        <div class="d-flex justify-content-between">
+                            <button style="background-color: #5a467e; border: 0;" type="button" class="btn btn-secondary" onclick="prevSection()">Anterior</button>
+                            <button style="background-color:  #6200ea; border:0;" type="button" class="btn btn-primary" onclick="showSection(currentSection + 1)">Próximo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Seção 4: Habilidades -->
+    <script>
+        function toggleNivelIdioma(i) {
+            const toggles = document.querySelectorAll("#toggleIdioma");
+
+
+            for (const toggle of toggles) {
+                if (i == 0) {
+                    toggle.style.display = "block";
+                    document.getElementById("idioma_selecao").setAttribute("required", "");
+                    document.getElementById("nivel_idioma").setAttribute("required", "");
+                } else {
+                    toggle.style.display = "none";
+                    document.getElementById("idioma_selecao").removeAttribute("required", "");
+                    document.getElementById("nivel_idioma").removeAttribute("required", "");
+                }
+            }
+        }
+    </script>
+    <div id="section" class="container my-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div style="background-image: linear-gradient(28deg, #e8d8ff, white);" class="bg-white p-4 rounded shadow">
+                    <h2 class="text-center mb-4">Habilidades</h2>
+                    <form>
+                        <!-- Checkbox: Conhecimento em outro idioma -->
+                        <fieldset class="form-group mb-4">
+                            <p>Possui conhecimento em outro idioma?<span style="color: red;">*</span></p>
+                            <div class="form-check">
+                                <input style="border: 1px solid #b49dd4;" class="form-check-input" onclick="toggleNivelIdioma(0)" type="radio" id="idioma_sim" name="idioma" value="sim" required>
+                                <label class="form-check-label" for="idioma_sim">Sim</label>
+                            </div>
+                            <div class="form-check">
+                                <input style="border: 1px solid #b49dd4;" class="form-check-input" onclick="toggleNivelIdioma(1)" type="radio" id="idioma_nao" name="idioma" value="não" required>
+                                <label class="form-check-label" for="idioma_nao">Não</label>
+                            </div>
+                        </fieldset>
+    
+                        <!-- Idioma e Nível -->
+                        <div id="toggleIdioma" style="display: none;">
+                            <div class="form-group mb-3">
+                                <label for="idioma_selecao">Selecione o idioma:<span style="color: red;">*</span></label>
+                                <select style="border: 1px solid #b49dd4;" id="idioma_selecao" name="idioma_selecao" class="form-control">
+                                    <option value="">Selecione</option>
+                                    <option value="Árabe">Árabe</option>
+                                    <option value="Alemão">Alemão</option>
+                                    <option value="Francês">Francês</option>
+                                    <option value="Inglês">Inglês</option>
+                                    <option value="Russo">Russo</option>
+                                    <option value="Espanhol">Espanhol</option>
+                                    <option value="Chinês">Chinês</option>
+                                    <option value="Japonês">Japonês</option>
+                                </select>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="nivel_idioma">Nível de habilidade nesse idioma:<span style="color: red;">*</span></label>
+                                <select style="border: 1px solid #b49dd4;" id="nivel_idioma" name="nivel_idioma" class="form-control">
+                                    <option value="">Selecione</option>
+                                    <option value="iniciante">Iniciante</option>
+                                    <option value="intermediario">Intermediário</option>
+                                    <option value="avancado">Avançado</option>
+                                    <option value="fluente">Fluente</option>
+                                </select>
+                            </div>
+                        </div>
+    
+                        <!-- Ferramenta dominada -->
+                        <div class="form-group mb-3">
+                            <label for="habilidade">Selecione a ferramenta que você mais domina:<span style="color: red;">*</span></label>
+                            <select style="border: 1px solid #b49dd4;" id="habilidade" name="habilidade" class="form-control" required>
+                                <option value="">Selecione</option>
+                                <option value="ReactJS">React JS</option>
+                                <option value="Angular">Angular</option>
+                                <option value="VueJS">VueJS</option>
+                                <option value="ION">ION</option>
+                                <option value="Joomla">Joomla</option>
+                                <option value="Drupal">Drupal</option>
+                                <option value="WordPress">WordPress</option>
+                                <option value="XAMPP">XAMPP</option>
+                                <option value="Anaconda">Anaconda</option>
+                            </select>
+                        </div>
+    
+                        <!-- Linguagem de programação -->
+                        <div class="form-group mb-3">
+                            <label for="linguagem">Qual destas linguagens de programação você mais se adequa:<span style="color: red;">*</span></label>
+                            <select style="border: 1px solid #b49dd4;" id="linguagem" name="linguagem" class="form-control" required>
+                                <option value="">Selecione</option>
+                                <option value="HTML5">HTML5</option>
+                                <option value="CSS3">CSS3</option>
+                                <option value="JavaScript">JavaScript</option>
+                                <option value="PHP">PHP</option>
+                                <option value="Python">Python</option>
+                            </select>
+                        </div>
+    
+                        <!-- Habilidades extras -->
+                        <div class="form-group mb-3">
+                            <label for="habilidades">Diga mais um pouco sobre suas habilidades:<span style="color: red;">*</span></label>
+                            <textarea style="border: 1px solid #b49dd4;" id="habilidades" name="habilidades" class="form-control" rows="4" placeholder="Descreva suas habilidades" required></textarea>
+                        </div>
+    
+                        <!-- Botões de navegação -->
+                        <div class="d-flex justify-content-between">
+                            <button style="background-color: #5a467e; border: 0;"  type="button" class="btn btn-secondary" onclick="prevSection()">Anterior</button>
+                            <button style="background-color:  #6200ea; border:0;" type="button" class="btn btn-primary" onclick="showSection(currentSection + 1)">Próximo</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Seção 5 -->
+    <script>
+        function localCurso(i) {
+            
+            if (i === "nivel_ensino") {j = "uf_curso";} else
+            if (i === "uf_curso") {j = "cidade_curso";} 
+            else {j = "nome_curso";}
+
+            if (document.getElementById(i).value !== "NONE") {
+                document.getElementById(j).style.display = "block";
+            } else {
+                document.getElementById(j).style.display = "none";
+            }
+        }
+    </script>
+
+    <div id="section" class="container my-4">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div style="background-image: linear-gradient(28deg, #e8d8ff, white);" class="bg-white p-4 rounded shadow">
+                    <h2 class="text-center mb-4">Ensino</h2>
+                    <form>
+                        <!-- Nível de ensino -->
+                        <label for="nivel_ensino">Está cursando em qual nível de ensino?<span style="color: red;">*</span></label>
+                        <select style="border: 1px solid #b49dd4;" onchange="localCurso('nivel_ensino')" id="nivel_ensino" name="nivel_ensino" class="form-control mb-3" required>
+                            <option value="NONE">Selecione</option>
+                            <option value="medio">Médio / Técnico</option>
+                            <option value="tecnico">Técnico</option>
+                            <option value="graduacao">Graduação</option>
+                        </select>
+                        
+    
+                        <!-- UF do curso -->
+                        <div id="uf_curso" style="display: none;">
+                            <label for="uf_curso">Selecione o estado da sua instituição de ensino:<span style="color: red;">*</span></label>
+                            <select style="border: 1px solid #b49dd4;" onChange="localCurso('uf_curso', 'cidade_curso')" id="uf_curso" name="uf_curso" class="form-control mb-3" required>
+                                <option value="NONE">Selecione um estado</option>
+                                <option value="AC">AC</option>
+                                <option value="AL">AL</option>
+                                <option value="AP">AP</option>
+                                <option value="AM">AM</option>
+                                <option value="BA">BA</option>
+                                <option value="CE">CE</option>
+                                <option value="DF">DF</option>
+                                <option value="ES">ES</option>
+                                <option value="GO">GO</option>
+                                <option value="MA">MA</option>
+                                <option value="MT">MT</option>
+                                <option value="MS">MS</option>
+                                <option value="MG">MG</option>
+                                <option value="PA">PA</option>
+                                <option value="PB">PB</option>
+                                <option value="PR">PR</option>
+                                <option value="PE">PE</option>
+                                <option value="PI">PI</option>
+                                <option value="RJ">RJ</option>
+                                <option value="RN">RN</option>
+                                <option value="RS">RS</option>
+                                <option value="RO">RO</option>
+                                <option value="RR">RR</option>
+                                <option value="SC">SC</option>
+                                <option value="SP">SP</option>
+                                <option value="SE">SE</option>
+                                <option value="TO">TO</option>
+                            </select>
+                        </div>
+
+                        <!-- Cidade do curso -->
+                        <div id="cidade_curso" style="display: none;">
+                            <label for="cidade_curso">Selecione a cidade da sua instituição de ensino:<span style="color: red;">*</span></label>
+                            <select style="border: 1px solid #b49dd4;" onChange="localCurso('cidade_curso', 'nome_curso')" id="cidade_curso" name="cidade_curso" class="form-control mb-3" required>
+                                <option value="NONE">Selecione um estado</option>
+                                <option value="Angra dos Reis">Angra dos Reis</option>
+                                <option value="Aperibé">Aperibé</option>
+                                <option value="Araruama">Araruama</option>
+                                <option value="Areal">Areal</option>
+                                <option value="Armação dos Búzios">Armação dos Búzios</option>
+                                <option value="Arraial do Cabo">Arraial do Cabo</option>
+                                <option value="Barra do Piraí">Barra do Piraí</option>
+                                <option value="Barra Mansa">Barra Mansa</option>
+                                <option value="Belford Roxo">Belford Roxo</option>
+                                <option value="Bom Jardim">Bom Jardim</option>
+                                <option value="Bom Jesus do Itabapoana">Bom Jesus do Itabapoana</option>
+                                <option value="Cabo Frio">Cabo Frio</option>
+                                <option value="Cachoeiras de Macacu">Cachoeiras de Macacu</option>
+                                <option value="Cambuci">Cambuci</option>
+                                <option value="Campos dos Goytacazes">Campos dos Goytacazes</option>
+                                <option value="Cantagalo">Cantagalo</option>
+                                <option value="Carapebus">Carapebus</option>
+                                <option value="Cardoso Moreira">Cardoso Moreira</option>
+                                <option value="Carmo">Carmo</option>
+                                <option value="Casimiro de Abreu">Casimiro de Abreu</option>
+                                <option value="Comendador Levy Gasparian">Comendador Levy Gasparian</option>
+                                <option value="Conceição de Macabu">Conceição de Macabu</option>
+                                <option value="Cordeiro">Cordeiro</option>
+                                <option value="Duas Barras">Duas Barras</option>
+                                <option value="Duque de Caxias">Duque de Caxias</option>
+                                <option value="Engenheiro Paulo de Frontin">Engenheiro Paulo de Frontin</option>
+                                <option value="Guapimirim">Guapimirim</option>
+                                <option value="Guaratiba">Guaratiba</option>
+                                <option value="Iguaba Grande">Iguaba Grande</option>
+                                <option value="Itaboraí">Itaboraí</option>
+                                <option value="Itaguaí">Itaguaí</option>
+                                <option value="Italva">Italva</option>
+                                <option value="Itaocara">Itaocara</option>
+                                <option value="Itaperuna">Itaperuna</option>
+                                <option value="Itatiaia">Itatiaia</option>
+                                <option value="Ilha Do Governador">Ilha Do Governador</option>
+                                <option value="Japeri">Japeri</option>
+                                <option value="jacarépagua">jacarépagua</option>
+                                <option value="Laje do Muriaé">Laje do Muriaé</option>
+                                <option value="Macaé">Macaé</option>
+                                <option value="Macuco">Macuco</option>
+                                <option value="Magé">Magé</option>
+                                <option value="Mangaratiba">Mangaratiba</option>
+                                <option value="Maricá">Maricá</option>
+                                <option value="Mendes">Mendes</option>
+                                <option value="Mesquita">Mesquita</option>
+                                <option value="Miguel Pereira">Miguel Pereira</option>
+                                <option value="Miracema">Miracema</option>
+                                <option value="Natividade">Natividade</option>
+                                <option value="Nilópolis">Nilópolis</option>
+                                <option value="Niterói">Niterói</option>
+                                <option value="Nova Friburgo">Nova Friburgo</option>
+                                <option value="Nova Iguaçu">Nova Iguaçu</option>
+                                <option value="Paracambi">Paracambi</option>
+                                <option value="Paraíba do Sul">Paraíba do Sul</option>
+                                <option value="Parati">Parati</option>
+                                <option value="Paty do Alferes">Paty do Alferes</option>
+                                <option value="Petrópolis">Petrópolis</option>
+                                <option value="Pinheiral">Pinheiral</option>
+                                <option value="Piraí">Piraí</option>
+                                <option value="Porciúncula">Porciúncula</option>
+                                <option value="Porto Real">Porto Real</option>
+                                <option value="Pavuna">Pavuna</option>
+                                <option value="Quatis">Quatis</option>
+                                <option value="Queimados">Queimados</option>
+                                <option value="Quissamã">Quissamã</option>
+                                <option value="Resende">Resende</option>
+                                <option value="Rio Bonito">Rio Bonito</option>
+                                <option value="Rio Claro">Rio Claro</option>
+                                <option value="Rio das Flores">Rio das Flores</option>
+                                <option value="Rio das Ostras">Rio das Ostras</option>
+                                <option value="Realengo">Realengo</option>
+                                <option value="Rio de Janeiro">Rio de Janeiro</option>
+                                <option value="Santa Maria Madalena">Santa Maria Madalena</option>
+                                <option value="Santo Antônio de Pádua">Santo Antônio de Pádua</option>
+                                <option value="São Fidélis">São Fidélis</option>
+                                <option value="São Francisco de Itabapoana">São Francisco de Itabapoana</option>
+                                <option value="São Gonçalo">São Gonçalo</option>
+                                <option value="São João da Barra">São João da Barra</option>
+                                <option value="São João de Meriti">São João de Meriti</option>
+                                <option value="São José de Ubá">São José de Ubá</option>
+                                <option value="São José do Vale do Rio Preto">São José do Vale do Rio Preto</option>
+                                <option value="São Pedro da Aldeia">São Pedro da Aldeia</option>
+                                <option value="São Sebastião do Alto">São Sebastião do Alto</option>
+                                <option value="Sapucaia">Sapucaia</option>
+                                <option value="Saquarema">Saquarema</option>
+                                <option value="Seropédica">Seropédica</option>
+                                <option value="Silva Jardim">Silva Jardim</option>
+                                <option value="Sumidouro">Sumidouro</option>
+                                <option value="Santa Cruz">Santa Cruz</option>
+                                <option value="Tanguá">Tanguá</option>
+                                <option value="Teresópolis">Teresópolis</option>
+                                <option value="Trajano de Moraes">Trajano de Moraes</option>
+                                <option value="Três Rios">Três Rios</option>
+                                <option value="Valença">Valença</option>
+                                <option value="Varre-Sai">Varre-Sai</option>
+                                <option value="Vassouras">Vassouras</option>
+                                <option value="Volta Redonda">Volta Redonda</option>
+                            </select>
+                        </div>
+    
+                        <div id="nome_curso" class="form-group mb-3" style="display:none;">
+                            <label for="nome_curso">Selecione a cidade da sua instituição de ensino:<span style="color: red;">*</span></label>
+                            <select style="border: 1px solid #b49dd4;" id="nome_curso" name="nome_curso" class="form-control mb-3" required>
+                                <option value="NONE">Selecione</option>
+                                <option value="Academia Estadual de Polícia Silvio Terra">Academia Estadual de Polícia Silvio Terra</option>
+                                <option value="Colégio de Aplicação da UERJ">Colégio de Aplicação da UERJ</option>
+                                <option value="Associação Civil de Divulgação Cultural e Educacional Japonesa do Rio de Janeiro">Associação Civil de Divulgação Cultural e Educacional Japonesa do Rio de Janeiro</option>
+                                <option value="Instituto Benjamin Constant">Instituto Benjamin Constant</option>
+                                <option value="Colégio de Aplicação da Universidade Federal do Rio de Janeiro">Colégio de Aplicação da Universidade Federal do Rio de Janeiro</option>
+                                <option value="Centro Federal de Educação Tecnológica do Rio de Janeiro (CEFET/RJ) - Celso Sucow da Fonseca">Centro Federal de Educação Tecnológica do Rio de Janeiro (CEFET/RJ) - Celso Sucow da Fonseca</option>
+                                <option value="Centro Federal de Educação Tecnológica do Rio de Janeiro (CEFET/RJ) - Maria da Graça">Centro Federal de Educação Tecnológica do Rio de Janeiro (CEFET/RJ) - Maria da Graça</option>
+                                <option value="Centro Universitário Augusto Motta">Centro Universitário Augusto Motta</option>
+                                <option value="Centro Universitário Celso Lisboa">Centro Universitário Celso Lisboa</option>
+                                <option value="Colégio Andrews">Colégio Andrews</option>
+                                <option value="Colégio Cruzeiro">Colégio Cruzeiro</option>
+                                <option value="Colégio dos Padres Jesuítas">Colégio dos Padres Jesuítas</option>
+                                <option value="Colégio Estadual João Alfredo">Colégio Estadual João Alfredo</option>
+                                <option value="Colégio Sagrado Coração de Maria (Rio de Janeiro)">Colégio Sagrado Coração de Maria (Rio de Janeiro)</option>
+                                <option value="Colégio Santo Antônio Maria Zaccaria">Colégio Santo Antônio Maria Zaccaria</option>
+                                <option value="Colégio Vasco da Gama">Colégio Vasco da Gama</option>
+                                <option value="Conservatório Brasileiro de Música">Conservatório Brasileiro de Música</option>
+                                <option value="Conservatório de Música do Rio de Janeiro">Conservatório de Música do Rio de Janeiro</option>
+                                <option value="Curso Unique">Curso Unique</option>
+                                <option value="Educandário Gonçalves de Araújo">Educandário Gonçalves de Araújo</option>
+                                <option value="Escola Firjan SESI">Escola Firjan SESI</option>
+                                <option value="Escola de Música da Universidade Federal do Rio de Janeiro">Escola de Música da Universidade Federal do Rio de Janeiro</option>
+                                <option value="Escola Nacional de Circo">Escola Nacional de Circo</option>
+                                <option value="Escola Politécnica de Saúde Joaquim Venâncio">Escola Politécnica de Saúde Joaquim Venâncio</option>
+                                <option value="Escola Superior de Fé e Catequese Mater Ecclesiae">Escola Superior de Fé e Catequese Mater Ecclesiae</option>
+                                <option value="Escola Técnica Estadual Adolpho Bloch">Escola Técnica Estadual Adolpho Bloch</option>
+                                <option value="Escola Técnica Estadual Oscar Tenório">Escola Técnica Estadual Oscar Tenório</option>
+                                <option value="Escola Técnica Estadual de Teatro Martins Penna">Escola Técnica Estadual de Teatro Martins Penna</option>
+                                <option value="Faculdade de Ciências Médicas da Universidade do Estado do Rio de Janeiro">Faculdade de Ciências Médicas da Universidade do Estado do Rio de Janeiro</option>
+                                <option value="Escola Técnica Estadual Ferreira Viana">Escola Técnica Estadual Ferreira Viana</option>
+                                <option value="Fundação CECIERJ">Fundação CECIERJ</option>
+                                <option value="Instituto Alberto Luiz Coimbra de Pós-Graduação e Pesquisa em Engenharia">Instituto Alberto Luiz Coimbra de Pós-Graduação e Pesquisa em Engenharia</option>
+                                <option value="Instituto Brasileiro de Medicina de Reabilitação">Instituto Brasileiro de Medicina de Reabilitação</option>
+                                <option value="Instituto de Medicina Social da Universidade do Estado do Rio de Janeiro">Instituto de Medicina Social da Universidade do Estado do Rio de Janeiro</option>
+                                <option value="Instituto Helena Antipoff">Instituto Helena Antipoff</option>
+                                <option value="ETE Juscelino Kubitschek">ETE Juscelino Kubitschek</option>
+                                <option value="Liceu de Artes e Ofícios do Rio de Janeiro">Liceu de Artes e Ofícios do Rio de Janeiro</option>
+                                <option value="Liceu Literário Português">Liceu Literário Português</option>
+                                <option value="Mallet Soares">Mallet Soares</option>
+                                <option value="Instituto de Tecnologia ORT">Instituto de Tecnologia ORT</option>
+                                <option value="Fundação Osório">Fundação Osório</option>
+                                <option value="Escola Técnica Estadual República">Escola Técnica Estadual República</option>
+                                <option value="ETE Santa Cruz">ETE Santa Cruz</option>
+                                <option value="Colégio Santo Agostinho (Leblon)">Colégio Santo Agostinho (Leblon)</option>
+                                <option value="Colégio Santo Inácio">Colégio Santo Inácio</option>
+                                <option value="Colégio de São Bento do Rio de Janeiro">Colégio de São Bento do Rio de Janeiro</option>
+                                <option value="Colégio São Vicente de Paulo">Colégio São Vicente de Paulo</option>
+                                <option value="Universidade Federal do Estado do Rio de Janeiro">Universidade Federal do Estado do Rio de Jane</option>iro
+                            </select>
+                        </div>
+
+                        <fieldset class="form-group mb-4">
+                            <p>Você estuda em qual turno?<span style="color: red;">*</span></p>
+                            <div class="form-check">
+                                <input style="border: 1px solid #b49dd4;" class="form-check-input" type="radio" id="manha" name="turno" value="manha" required>
+                                <label class="form-check-label" for="manha">Manhã</label>
+                            </div>
+                            <div class="form-check">
+                                <input style="border: 1px solid #b49dd4;" class="form-check-input" type="radio" id="tarde" name="turno" value="tarde" required>
+                                <label class="form-check-label" for="tarde">Tarde</label>
+                            </div>
+                            <div class="form-check">
+                                <input style="border: 1px solid #b49dd4;" class="form-check-input" type="radio" id="noite" name="turno" value="noite" required>
+                                <label class="form-check-label" for="noite">Noite</label>
+                            </div>
+                        </fieldset>
+                    
+                        <fieldset class="form-group mb-4">
+                            <style>
+                                /* Chrome, Safari, Edge, Opera */
+                                #anos-text::-webkit-outer-spin-button,
+                                #anos-text::-webkit-inner-spin-button,
+                                #semestres-text::-webkit-outer-spin-button,
+                                #semestres-text::-webkit-inner-spin-button {
+                                  -webkit-appearance: none;
+                                  margin: 0;
+                                }
+                                
+                                /* Firefox */
+                                #anos-text,
+                                #semestres-text {
+                                  -moz-appearance: textfield;
+                                }
+                            </style>
+
+                            <p>Qual a duração do seu curso?<span style="color: red;">*</span></p>
+                        
+                            <div style="display: flex; align-items: end;">
+                              <div class="form-check col-2" style="display: flex; align-items: end; gap: 30%;">
+                                <input style="border: 1px solid #b49dd4;"
+                                  id="anos-radio"
+                                  class="form-check-input"
+                                  type="radio"
+                                  name="duracao"
+                                  value="anos"
+                                  data-target="anos-text"
+                                  required
+                                />
+                                <input
+                                    oninput="limitInputLength(this)"
+                                    style="
+                                        border: 1px solid #b49dd4;
+                                        background-color: rgba(255, 255, 255, 0.418);
+                                        border: 0;
+                                        border-radius: 0;
+                                        border-bottom: 1px solid #6200ea;
+                                        text-align: center;
+                                        padding: 0;
+                                        padding-top: 10%;
+                                        width: 60%;"
+                                    max="9"
+                                    class="anos-text form-control"
+                                    type="number"
+                                    id="anos-text"
+                                    disabled />
+                              </div>
+                              <span>ano(s)</span>
+                            </div>
+                        
+                            <div style="display: flex; align-items: end;">
+                              <div class="form-check col-2 mt-3" style="display: flex; align-items: end; gap: 30%;">
+                                <input style="border: 1px solid #b49dd4;"
+                                  id="semestres-radio"
+                                  class="form-check-input"
+                                  type="radio"
+                                  name="duracao"
+                                  value="semestres"
+                                  data-target="semestres-text"
+                                  required
+                                />
+                                <input
+                                    oninput="limitInputLength(this)"
+                                    style="
+                                        border: 1px solid #b49dd4;
+                                        background-color: rgba(255, 255, 255, 0.418);
+                                        border: 0;
+                                        border-radius: 0;
+                                        border-bottom: 1px solid #6200ea;
+                                        text-align: center;
+                                        padding: 0;
+                                        padding-top: 10%;
+                                        width: 60%;"
+                                    max="9" class="semestres_text form-control"
+                                    type="number"
+                                    id="semestres-text"
+                                    disabled />
+                              </div>
+                              <span>semestre(s)</span>
+                            </div>
+                          </fieldset>
+
+                        
+                        <div class="form-group mb-3">
+                            <label for="periodo_atual">Qual seu período (ano/semestre) atual?<span style="color: red;">*</span></label>
+                            <input style="border: 1px solid #b49dd4;" type="number" id="periodo_atual" name="periodo_atual" class="form-control" placeholder="Digite seu período atual" required>
+                        </div>
+
+                        <!-- Botões de navegação -->
+                        <div class="d-flex justify-content-between">
+                            <button style="background-color: #5a467e; border: 0;"  type="button" class="btn btn-secondary" onclick="prevSection()">Anterior</button>
+                            <button style="background-color:  #6200ea; border:0;" id="send" type="button" class="btn btn-primary" onclick="finishForm()">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção Final -->
+    <div class="final">
+        <h1>Parabéns! Sua inscrição foi concluída!</h1>
+    </div>
+</body>
+</html>
